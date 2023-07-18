@@ -14,4 +14,6 @@ $user = 'root';
 $password = '';
 $db = new db;
 $db->connect($dbname , $server , $user , $password);
-?>
+function formatDate($date){
+    return date("Y-m-d H:i:s",$date);
+}

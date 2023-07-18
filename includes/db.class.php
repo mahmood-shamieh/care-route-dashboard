@@ -98,7 +98,7 @@ class db
 		// print($this->query);
 		// die;
 		$result = mysqli_query($this->dbConnect, $this->query) or die($this->debug(mysqli_error($this->dbConnect), $this->query));
-		
+
 		if ($this->affect()) {
 			$done = mysqli_insert_id($this->dbConnect);
 		} else {
@@ -147,11 +147,11 @@ class db
 		}
 		return $done;
 	}
-	
 
 
 
-	function update($table, $values, $where = 1,   $limit = 1 , $enableTracking = true)
+
+	function update($table, $values, $where = 1,   $limit = 1, $enableTracking = false)
 	{
 		$this->tableName = trim($table);
 		$this->value = $values;
@@ -176,7 +176,7 @@ class db
 		// die;
 		// $result = mysqli_query( $this->query ) or die( $this->debug(mysqli_error($this->dbConnect),$this->query) );
 		$result = mysqli_query($this->dbConnect, $this->query) or die($this->debug(mysqli_error($this->dbConnect), $this->query));
-		$data1 = $this->select('SELECT * FROM `' . $this->tableName . '` WHERE ' . $this->where);		
+		$data1 = $this->select('SELECT * FROM `' . $this->tableName . '` WHERE ' . $this->where);
 		if ($enableTracking && isset($_COOKIE['cmd_id'])) {
 			$values = array(
 				'admin_id' => $_COOKIE['admin_id'],
@@ -216,21 +216,7 @@ class db
 		} else {
 			$done = false;
 		}
-		if (isset($_COOKIE['cmd_id'])) {
-			$values = array(
-				'admin_id' => $_COOKIE['admin_id'],
-				'action' => $this->sqlSafe('حذف'),
-				'table_name' => $this->sqlsafe($this->table),
-				'cmd_id' => $_COOKIE['cmd_id'],
-				'Xdate' => $this->sqlSafe(time())
-			);
-			foreach ($data[0] as $key => $value) {
-				if (!empty($value))
-					$values['record_info'] .= $key . " : " . $value . "<br>";
-			}
-			$values['record_info'] = $this->sqlsafe($values['record_info']);
-			$this->insert('admin_tracking', $values, false);
-		}
+
 		return $done;
 	}
 

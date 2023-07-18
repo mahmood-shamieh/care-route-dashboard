@@ -45,6 +45,8 @@ if (isset($_GET['cmd']) && !empty($_GET['cmd'])) {
 	<script src="assets/js/plugins/tables/datatables/extensions/pdfmake/pdfmake.min.js"></script>
 	<script src="assets/js/plugins/tables/datatables/extensions/pdfmake/vfs_fonts.min.js"></script>
 	<script src="assets/js/plugins/tables/datatables/extensions/buttons.min.js"></script>
+	<script src="assets/js/plugins/notifications/sweet_alert.min.js"></script>
+	<!-- <script src="assets/js/demo_pages/extra_sweetalert.js"></script> -->
 
 	<script src="assets/js/app.js"></script>
 	<!-- <script src="assets/js/demo_pages/dashboard.js"></script> -->
