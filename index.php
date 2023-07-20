@@ -1,7 +1,7 @@
 <?php
 require('includes/sess.php');
 require_once("functions.php");
-require("upload.php");
+
 if (empty($_COOKIE['admin_id']) || empty($_COOKIE['logged_in']) || empty($_COOKIE['username']) || empty($_COOKIE['session']) || empty($_COOKIE['login_time'])) {
 	print '<script language="JavaScript">window.location="login.php";</script>';
 }
