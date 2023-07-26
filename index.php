@@ -269,15 +269,18 @@ if (isset($_GET['cmd']) && !empty($_GET['cmd'])) {
 		<div class="overflow-auto overflow-lg-visible scrollbar-hidden flex-1">
 			<ul class="navbar-nav flex-row text-nowrap">
 				<?php foreach ($modules as $key => $value) {
+					if ($value['view'] == 1) {
+						// print($value['view']);
 				?>
-					<li class="nav-item">
-						<a href="index.php?cmd=<?php print($value['link']) ?>" class="navbar-nav-link <?php ($_GET['cmd'] == $value['link'] ? print('active') : print('')) ?> ">
-							<?php print($value['icon']) ?>
-							<?php print($value['name']) ?>
+						<li class="nav-item">
+							<a href="index.php?cmd=<?php print($value['link']) ?>" class="navbar-nav-link <?php ($_GET['cmd'] == $value['link'] ? print('active') : print('')) ?> ">
+								<?php print($value['icon']) ?>
+								<?php print($value['name']) ?>
 
-						</a>
-					</li>
+							</a>
+						</li>
 				<?php
+					}
 				} ?>
 
 

@@ -9059,7 +9059,7 @@ button.bg-yellow-100:hover {
   border-left: 0 !important;
 }
 .border-primary {
-  border-color: #2196f3 !important;
+  border-color: var(--primary-color) !important;
 }
 .border-primary-100 {
   border-color: #e9f5fe !important;

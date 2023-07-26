@@ -1,4 +1,7 @@
 <?php
+
+
+
 if (isset($_POST['add'])) {
 
     $ins_arr = array(
@@ -13,6 +16,24 @@ if (isset($_POST['add'])) {
 
     $test = $db->insert('locations', $ins_arr, false);
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
+    die;
+}
+if (isset($_POST['edit'])) {
+
+    $ins_arr = array(
+        'location_name' => $db->sqlsafe($_POST['location_name']),
+        'check_in_status' => $db->sqlsafe($_POST['check_in_status']),
+        'check_out_status' => $db->sqlsafe($_POST['check_out_status']),
+        'description' => $db->sqlsafe($_POST['description']),
+        'creation_date' => $db->sqlsafe(formatDate(time())),
+        'last_update' => $db->sqlsafe(formatDate(time())),
+        'active' => $_POST['active'] == 'on' ? 1 : 0,
+
+    );
+
+    $test = $db->update('locations', $ins_arr, ' `location_id` =  ' . $db->sqlsafe($_POST['edit']));
+    print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
+    die;
 }
 if (isset($_GET['suspend'])) {
     $data = $db->select('select * from `locations` where `location_id` = ' . $_GET['id']);
@@ -22,6 +43,7 @@ if (isset($_GET['suspend'])) {
     $data[0]['active'] = 0;
     $test = $db->update('locations', $data[0], ' `location_id` = ' . $_GET['id']);
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
+    die;
 }
 if (isset($_GET['active'])) {
     $data = $db->select('select * from `locations` where `location_id` = ' . $_GET['id']);
@@ -31,11 +53,13 @@ if (isset($_GET['active'])) {
     $data[0]['active'] = 1;
     $test = $db->update('locations', $data[0], ' `location_id` = ' . $_GET['id']);
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
+    die;
 }
 if (isset($_POST['delete'])) {
     $test = $db->delete('locations', ' `location_id` = ' . $_POST['delete']);
     $test = $test ? 1 : 0;
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
+    die;
 }
 ?>
 
@@ -143,9 +167,9 @@ unset($_GET['done'])
                 ajax: {
                     'url': "modules/ajaxes/locations/locations-ajax.php",
                     'type': 'POST',
-                    // 'data': {
-                    //     'section': <?php print($_GET['cmd']) ?>
-                    // }
+                    'data': {
+                        'section': <?php print(json_encode($currentSection)) ?>
+                    }
                 },
 
                 columns: [{
@@ -303,7 +327,7 @@ unset($_GET['done'])
 
 
 <div id="add-pop-up" class="modal fade show" aria-modal="true" role="dialog">
-    <div class="modal-dialog modal-full">
+    <div class="modal-dialog modal-dialog-scrollable modal-full">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
                 <h5 class="modal-title">Edit Location Details</h5>

@@ -58,10 +58,10 @@ if (isset($_POST['add'])) {
 if (isset($_POST['edit']) && $_POST['edit'] != 0) {
     foreach ($cmsModeules as $key => $value) {
         $ins_prev = array(
-            'edit' => $_POST['edit' . $value['id'].$_POST['edit']] == 'on' ? 1 : 0,
-            'add' => $_POST['add' . $value['id'].$_POST['edit']] == 'on' ? 1 : 0,
-            'delete' => $_POST['delete' . $value['id'].$_POST['edit']] == 'on' ? 1 : 0,
-            'view' => $_POST['view' . $value['id'].$_POST['edit']] == 'on' ? 1 : 0,
+            'edit' => $_POST['edit' . $value['id'] . $_POST['edit']] == 'on' ? 1 : 0,
+            'add' => $_POST['add' . $value['id'] . $_POST['edit']] == 'on' ? 1 : 0,
+            'delete' => $_POST['delete' . $value['id'] . $_POST['edit']] == 'on' ? 1 : 0,
+            'view' => $_POST['view' . $value['id'] . $_POST['edit']] == 'on' ? 1 : 0,
 
         );
         $db->update('admin_prev', $ins_prev, '`module_id` = ' . $value['id'] . ' AND `admin_id` = ' . $_POST['edit']);
@@ -197,9 +197,9 @@ unset($_GET['done'])
                 ajax: {
                     'url': "modules/ajaxes/administrators/administrators-ajax.php",
                     'type': 'POST',
-                    // 'data': {
-                    //     'section': <?php print($_GET['cmd']) ?>
-                    // }
+                    'data': {
+                        'section': <?php print(json_encode($currentSection)) ?>
+                    }
                 },
 
                 columns: [{
@@ -439,11 +439,12 @@ unset($_GET['done'])
                                     $('#give-all-permisions').prop('checked', false);
                                     $('#add-all-true').removeAttr('value');
 
+
                                 } else {
                                     $('#prev-section').removeClass('row');
                                     $('#prev-section').addClass('d-none');
                                     $('#give-all-permisions').prop('checked', true);
-
+                                    $('#add-all-true').prop('value', 1);
 
 
                                 }

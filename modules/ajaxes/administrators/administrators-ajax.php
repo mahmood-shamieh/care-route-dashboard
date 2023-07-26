@@ -59,37 +59,37 @@ foreach ($innerData as $key => $value) {
     ];
     $data[$key]["Actions"] =
         '<td class="text-center">
-        <div class="list-icons' .
-        $key .
-        '">
-            <div class="dropdown">
+        <div class="list-icons">
+            <div class="dropdown position-static">
                 <a href="datatable_basic.html#" class="list-icons-item" data-toggle="dropdown">
                     <i class="icon-menu9"></i>
                 </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                <a href="index.php?cmd=admin&suspend=1&id=' .
-        $value["id"] .
-        '" class="dropdown-item"><i class="icon-eye-blocked2"></i> Suspend</a>
+                <div class="dropdown-menu dropdown-menu-lg">' .
+        ($_POST['section']['edit'] == 1 ?
+            '<a href="index.php?cmd=admin&suspend=1&id=' .
+            $value["id"] .
+            '" class="dropdown-item"><i class="icon-eye-blocked2"></i> Suspend</a>
                 <a href="index.php?cmd=admin&active=1&id=' .
-        $value["id"] .
-        '" class="dropdown-item"><i class="icon-eye2"></i> Activate</a>
+            $value["id"] .
+            '" class="dropdown-item"><i class="icon-eye2"></i> Activate</a>
                 <a href="#" data-toggle="modal" data-target="#edit_popup' .
-        $key .
-        '" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                <a href="#" data-toggle="modal" data-target="#delete_pop_up' .
-        $key .
-        '" class="dropdown-item"><i class="icon-trash"></i>Delete</a>
-                </div>
+            $key .
+            '" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>' : '') .
+        ($_POST['section']['delete'] == 1 ?
+            '<a href="#" data-toggle="modal" data-target="#delete_pop_up' .
+            $key .
+            '" class="dropdown-item"><i class="icon-trash"></i>Delete</a>' : '') .
+        '</div>
             </div>
         </div>
     </td>
-    <form method="post" enctype="multipart/form-data">
-    <input type="hidden" name="edit" value="' .
-    $value["id"] .
-    '">
     <div id="edit_popup' .
         $key .
         '" class="modal fade show"  aria-modal="true" role="dialog" >
+    <form method="post" enctype="multipart/form-data">
+    <input type="hidden" name="edit" value="' .
+        $value["id"] .
+        '">
     <div class="modal-dialog modal-dialog-scrollable modal-full">
     <div class="modal-content">
         <div class="modal-header bg-primary text-white">
@@ -147,99 +147,99 @@ foreach ($innerData as $key => $value) {
                 </div>
                 
                 <div class ="row p-2 justify-content-center">';
-   
-                foreach ($cmsModeules as $modulesKey => $module) {
-                    $data[$key]["Actions"] .=
-                        '<div class=" col-lg-6 col-md-12 col-sm-12 ">
+
+    foreach ($cmsModeules as $modulesKey => $module) {
+        $data[$key]["Actions"] .=
+            '<div class=" col-lg-6 col-md-12 col-sm-12 ">
                                             <div id="prev-block ' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="card">
+            $module["id"] .
+            $value["id"] .
+            '" class="card">
                                                 <div class="card-header header-elements-inline">
                                                     <h6 class="card-title">' .
-                        $module["name"] .
-                        '</h6>
+            $module["name"] .
+            '</h6>
                                                 </div>
                                                 <div class="card-body ">
                                                     <ul class="media-list row justify-content-between " style="align-items: baseline;">
                                                         <li class="media  col-lg-3 col-md-4 col-sm-6">
                                                             <div class="mr-3 ">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="add' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" name="add' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" ' .
-                        ($module["add"] == 1 ? "checked" : "") .
-                        '>
+                                                                    <input type="checkbox" class="custom-control-input crud" id="add' .
+            $module["id"] .
+            $value["id"] .
+            '" name="add' .
+            $module["id"] .
+            $value["id"] .
+            '" ' .
+            ($module["add"] == 1 ? "checked" : "") .
+            '>
                                                                     <label for="add' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="custom-control-label p-0"></label>
+            $module["id"] .
+            $value["id"] .
+            '" class="custom-control-label p-0"></label>
                                                                 </div>
                                                             </div>
                                                             <div class="media-body ">
                                                                 <h6 class="media-title">
                                                                     <label for="add' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="font-weight-semibold cursor-pointer mb-0">Add</label>
+            $module["id"] .
+            $value["id"] .
+            '" class="font-weight-semibold cursor-pointer mb-0">Add</label>
                                                                 </h6>
                                                             </div>
                                                         </li>
                                                         <li class="media  col-lg-3 col-md-4 col-sm-6">
                                                             <div class="mr-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="edit' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" name="edit' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" ' .
-                        ($module["edit"] == 1 ? "checked" : "") .
-                        '>
+                                                                    <input type="checkbox" class="custom-control-input crud" id="edit' .
+            $module["id"] .
+            $value["id"] .
+            '" name="edit' .
+            $module["id"] .
+            $value["id"] .
+            '" ' .
+            ($module["edit"] == 1 ? "checked" : "") .
+            '>
                                                                     <label for="edit' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="custom-control-label p-0"></label>
+            $module["id"] .
+            $value["id"] .
+            '" class="custom-control-label p-0"></label>
                                                                 </div>
                                                             </div>
                                                             <div class="media-body ">
                                                                 <h6 class="media-title">
                                                                     <label for="edit' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="font-weight-semibold cursor-pointer mb-0">Edit</label>
+            $module["id"] .
+            $value["id"] .
+            '" class="font-weight-semibold cursor-pointer mb-0">Edit</label>
                                                                 </h6>
                                                             </div>
                                                         </li>
                                                         <li class="media  col-lg-3 col-md-4 col-sm-6">
                                                             <div class="mr-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="delete' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" name="delete' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" ' .
-                        ($module["delete"] == 1 ? "checked" : "") .
-                        '>
+                                                                    <input type="checkbox" class="custom-control-input crud" id="delete' .
+            $module["id"] .
+            $value["id"] .
+            '" name="delete' .
+            $module["id"] .
+            $value["id"] .
+            '" ' .
+            ($module["delete"] == 1 ? "checked" : "") .
+            '>
                                                                     <label for="delete' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="custom-control-label p-0"></label>
+            $module["id"] .
+            $value["id"] .
+            '" class="custom-control-label p-0"></label>
                                                                 </div>
                                                             </div>
                                                             <div class="media-body ">
                                                                 <h6 class="media-title">
                                                                     <label for="delete' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="font-weight-semibold cursor-pointer mb-0">Delete</label>
+            $module["id"] .
+            $value["id"] .
+            '" class="font-weight-semibold cursor-pointer mb-0">Delete</label>
                                                                 </h6>
                                                             </div>
                                                         </li>
@@ -247,26 +247,26 @@ foreach ($innerData as $key => $value) {
                                                             <div class="mr-3">
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" id="view' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" name="view' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" ' .
-                        ($module["view"] == 1 ? "checked" : "") .
-                        '>
+            $module["id"] .
+            $value["id"] .
+            '" name="view' .
+            $module["id"] .
+            $value["id"] .
+            '" ' .
+            ($module["view"] == 1 ? "checked" : "") .
+            '>
                                                                     <label for="view' .
-                        $module["id"] .
-                        $value["id"] .
-                        '"  class="custom-control-label p-0"></label>
+            $module["id"] .
+            $value["id"] .
+            '"  class="custom-control-label p-0"></label>
                                                                 </div>
                                                             </div>
                                                             <div class="media-body ">
                                                                 <h6 class="media-title">
                                                                     <label for="view' .
-                        $module["id"] .
-                        $value["id"] .
-                        '" class="font-weight-semibold cursor-pointer mb-0">View</label>
+            $module["id"] .
+            $value["id"] .
+            '" class="font-weight-semibold cursor-pointer mb-0">View</label>
                                                                 </h6>
                                                             </div>
                                                         </li>
@@ -274,9 +274,10 @@ foreach ($innerData as $key => $value) {
                                                 </div>
                                             </div>
                                         </div>';
-                }
+    }
     $data[$key]["Actions"] .=
         '
+        
     </div>
     
     
@@ -292,8 +293,8 @@ foreach ($innerData as $key => $value) {
         </div>
         </div>
         </div>
-        </div>
         </form>
+        </div>
     <div id="admin_prev' .
         $key .
         '" class="modal fade show"  aria-modal="true" role="dialog" >

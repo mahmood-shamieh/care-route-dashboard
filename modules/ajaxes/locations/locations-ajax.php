@@ -8,6 +8,8 @@
 
 <?php
 require("../../../includes/conf.php");
+require_once '../../../assets/libraries/phpqrcode/qrlib.php';
+
 $columns = array(
 
     0 => "location_id",
@@ -62,37 +64,70 @@ $innerData = $db->select($query);
 
 
 $data = array();
-
+// print_r($_POST['section']);
+// die;
 foreach ($innerData as $key => $value) {
+    $location_id = $value["location_id"];
+    $qr_code_file = "../../../" . $mediaPath . "/locations/qrcode_" . $location_id . ".png";
+    if (!file_exists($qr_code_file)) {
+        QRcode::png($location_id, $qr_code_file, QR_ECLEVEL_Q, 6);
+    }
+
 
     $data[$key] = array(
-        "location_id" => $value["location_id"],
+        "location_id" => '<img class="border-2 border-primary" src="' . $mediaPath . '/locations/qrcode_' . $location_id . '.png">',
         "location_name" => $value["location_name"],
-        "check_in_status" => '<div class="badge badge-indigo">' . $value["check_in_status"] . '</div>',
-        "check_out_status" => '<div class="badge badge-pink">' . $value["check_out_status"] . '</div>',
+        "check_in_status" => '<div class="badge badge-indigo d-flex flex-1 justify-content-center">' . $value["check_in_status"] . '</div>',
+        "check_out_status" => '<div class="badge badge-pink d-flex flex-1 justify-content-center">' . $value["check_out_status"] . '</div>',
         "description" => $value["description"],
         "creation_date" => $value["creation_date"],
         "last_update" => $value["last_update"],
-        "Active" => $value["active"] == 1 ? '<div class="badge badge-teal"> Active </div>' : '<div class="badge badge-danger"> Susspend </div>',
-        "Actions" => '<td class="text-center">
+        "Active" => $value["active"] == 1 ? '<div class="badge badge-teal d-flex flex-1 justify-content-center"> Active </div>' : '<div class="badge badge-danger"> Susspend </div>',
+        "Actions" => '
+        <script>
+        function printDiv' . $location_id . '() {
+            var image = document.getElementById("QRIMAGE' . $location_id . '");
+            var a = window.open("", "","");
+            a.document.write("<html><head><title>CareRoute software</title></head>");
+            a.document.write("<body>");
+            a.document.write(image.innerHTML);
+            a.document.write("</body></html>");
+            var image = a.document.getElementById("image' . $location_id . '");
+            image.style.width = "50%";
+            image.style.display = "flex";
+            image.style.margin = "auto";
+            image.style.justifyContent = "center";
+            a.document.close();
+            a.print();
+        }
+        </script>
+        
+        <td class="text-center">
         <div class="list-icons">
             <div class="dropdown">
                 <a href="datatable_basic.html#" class="list-icons-item" data-toggle="dropdown">
                     <i class="icon-menu9"></i>
                 </a>
 
-                <div class="dropdown-menu dropdown-menu-right">
-                <a href="index.php?cmd=location&suspend=1&id=' . $value['location_id'] . '" class="dropdown-item"><i class="icon-eye-blocked2"></i> Suspend</a>
-                <a href="index.php?cmd=location&active=1&id=' . $value['location_id'] . '" class="dropdown-item"><i class="icon-eye2"></i> Activate</a>
-                <a href="#" data-toggle="modal" data-target="#edit_popup' . $key . '" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>
-                <a href="#" data-toggle="modal" data-target="#delete_pop_up' . $key . '" class="dropdown-item"><i class="icon-trash"></i>Delete</a>
+                <div class="dropdown-menu dropdown-menu-right">' . ($_POST['section']['edit'] == 1 ?
+            '<a href="index.php?cmd=location&suspend=1&id=' . $value['location_id'] . '" class="dropdown-item"><i class="icon-eye-blocked2"></i> Suspend </a>
                 
-                    
-                </div>
+                <a href="index.php?cmd=location&active=1&id=' . $value['location_id'] . '" class="dropdown-item"><i class="icon-eye2"></i> Activate </a>
+                <button class="dropdown-item" onclick="printDiv' . $location_id . '()"><i class="icon-printer2"></i> Print QR</button>
+                <a href="#" data-toggle="modal" data-target="#edit_popup' . $key . '" class="dropdown-item"><i class="icon-pencil7"></i> Edit</a>'
+            : ''
+        ) .
+            ($_POST['section']['delete'] == 1 ? '<a href="#" data-toggle="modal" data-target="#delete_pop_up' . $key . '" class="dropdown-item"><i class="icon-trash"></i>Delete</a>' : '') .
+
+
+            '        </div>
             </div>
         </div>
     </td>
+    
     <div id="edit_popup' . $key . '" class="modal fade show"  aria-modal="true" role="dialog" >
+    <form method="POST" >
+    <input type="hidden" name="edit" value="' . $value['location_id'] . '">
 		<div class="modal-dialog modal-full">
 			<div class="modal-content">
 				<div class="modal-header bg-primary text-white">
@@ -100,6 +135,9 @@ foreach ($innerData as $key => $value) {
 					<button type="button" class="close" data-dismiss="modal">×</button>
 				</div> 
 				<div class="modal-body">
+                <div id="QRIMAGE' . $location_id . '" class="col-lg-6 d-none">
+                <img id="image' . $location_id . '" src="' . $mediaPath . '/locations/qrcode_' . $location_id . '.png">
+                </div>                
                 <div class="form-group row">
                 <div class="col-lg-6 p-2">
                 <div class="row">
@@ -161,15 +199,22 @@ foreach ($innerData as $key => $value) {
                 </div>
                 </div>
                 </div>
+                <div class="row">
+                    <div class="custom-control custom-control-right custom-switch text-right p-2">
+                        <input type="checkbox" class="custom-control-input" id="sc_rs_c' . $value['location_id'] . '" name="active" ' . ($value['active'] == 1 ? 'checked=""' : '') . '>
+                        <label class="custom-control-label" for="sc_rs_c' . $value['location_id'] . '">Active</label>
+                    </div>
+                </div>
                 
             </div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="icon-cross2 font-size-base mr-1"></i> Close</button>
-					<button type="button" class="btn btn-primary"> <i class="icon-checkmark3 font-size-base mr-1"></i> Save changes</button>
+					<button type="submit" class="btn btn-primary"> <i class="icon-checkmark3 font-size-base mr-1"></i> Save changes</button>
 				</div>
 			</div>
 		</div>
+        </form>
 	</div>
     <div id="delete_pop_up' . $key . '" class="modal fade show" aria-modal="false" role="dialog" >
     <form method="POST" >
@@ -193,6 +238,7 @@ foreach ($innerData as $key => $value) {
                                 </form>
 							</div>
 						</div>
+					</div>
 					</div>
     
     ',

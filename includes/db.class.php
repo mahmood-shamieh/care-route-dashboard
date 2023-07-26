@@ -75,7 +75,7 @@ class db
 
 		return $output;
 	}
-	function insert($table, $values, $activeTracking = true)
+	function insert($table, $values, $activeTracking = false)
 	{
 		$this->tableName = trim($table);
 		$this->value = $values;
@@ -123,7 +123,7 @@ class db
 		}
 		return $done;
 	}
-	function truncate($table,  $activeTracking = true)
+	function truncate($table,  $activeTracking = false)
 	{
 		$this->tableName = trim($table);
 		$this->query = "TRUNCATE TABLE " . $this->tableName;

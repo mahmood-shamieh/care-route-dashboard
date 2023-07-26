@@ -1,4 +1,5 @@
 <?php
+
 define('BASEPATH', 'ounzo');
 ini_set('memory_limit', '500M');
 error_reporting(0);
