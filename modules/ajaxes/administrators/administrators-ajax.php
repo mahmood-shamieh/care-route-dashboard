@@ -140,7 +140,7 @@ foreach ($innerData as $key => $value) {
                                 <i class="icon-pencil6"></i>
                             </span>
                         </span>
-                        <input type="text" class="form-control border-left-0" placeholder="Admin Password"  name="password"">
+                        <input type="password" class="form-control border-left-0" placeholder="Admin Password"  name="password" ">
                     </div>
                 </div>
                 </div>

@@ -56,6 +56,23 @@ if (isset($_POST['add'])) {
     // die;
 }
 if (isset($_POST['edit']) && $_POST['edit'] != 0) {
+    $ins_arr = array(
+        'username' => $db->sqlsafe($_POST['username']),
+        'time_stamp' => $db->sqlsafe(formatDate(time())),
+        'status' => $_POST['active'] == 'on' ? 1 : 0,
+    );
+    if (isset($_POST['password']) && strlen($_POST['password']) != 0) {
+        $ins_arr['password'] =  $db->sqlsafe(md5($_POST['password']));
+    }
+    if (isset($_FILES['img']['size']) && $_FILES['img']['size'] != 0) {
+
+        $filename = upload_images('img', $mediaPath . '/admins/', time(), 'admin');
+
+        if (strlen($filename) != 0) {
+            $ins_arr['img'] = $db->sqlsafe($filename);
+        }
+    }
+    $db->update('administrators', $ins_arr, '`id` = ' . $_POST['edit']);
     foreach ($cmsModeules as $key => $value) {
         $ins_prev = array(
             'edit' => $_POST['edit' . $value['id'] . $_POST['edit']] == 'on' ? 1 : 0,
@@ -557,6 +574,7 @@ unset($_GET['done'])
                 <button id='sweet_success' type="sumbit" class="btn btn-primary"> <i class="icon-checkmark3 font-size-base mr-1"></i> Add Admin</button>
             </div>
             </form>
+
         </div>
 
     </div>

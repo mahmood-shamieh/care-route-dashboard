@@ -350,7 +350,7 @@ unset($_GET['done'])
                 <th>ssn number</th>
                 <th>patiant deth date time</th>
                 <th>patiant death indicator</th>
-                <th>patiant death indicator</th>
+                <th>Status</th>
                 <th class="text-center">Actions</th>
             </tr>
         </thead>
