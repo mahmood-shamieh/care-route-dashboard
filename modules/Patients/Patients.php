@@ -63,6 +63,7 @@ if (isset($_GET['suspend'])) {
         $data[0][$key] = $db->sqlsafe($value);
     }
     $data[0]['active'] = 0;
+    
     $test = $db->update('patiant_identifications', $data[0], ' `id` = ' . $_GET['id']);
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
     die;
@@ -73,6 +74,7 @@ if (isset($_GET['active'])) {
         $data[0][$key] = $db->sqlsafe($value);
     }
     $data[0]['active'] = 1;
+    
     $test = $db->update('patiant_identifications', $data[0], ' `id` = ' . $_GET['id']);
     print "<script language=\"JavaScript\">window.location=\"index.php?cmd=" . $_GET['cmd'] . "&done=" . $test . "\";</script>";
     die;

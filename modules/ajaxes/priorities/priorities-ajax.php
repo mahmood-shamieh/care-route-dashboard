@@ -66,7 +66,7 @@ foreach ($innerData as $key => $value) {
         
         <td class="text-center">
         <div class="list-icons">
-            <div class="dropdown">
+            <div class="dropdown position-static">
                 <a href="datatable_basic.html#" class="list-icons-item" data-toggle="dropdown">
                     <i class="icon-menu9"></i>
                 </a>

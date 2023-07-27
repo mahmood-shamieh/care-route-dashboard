@@ -38,7 +38,7 @@ foreach ($innerData as $key => $value) {
     );
     $data[$key] = [
         "img" =>
-        '<img width=100 height=100 src="' .
+        '<img class="border-2 border-primary" width=120 height=120 src="' .
             $mediaPath .
             "/admins/" .
             $value["img"] .
