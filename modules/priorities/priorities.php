@@ -350,7 +350,7 @@ unset($_GET['done'])
                                                 <i class="icon-pencil6"></i>
                                             </span>
                                         </span>
-                                        <input type="text" class="form-control border-left-0" placeholder="Priority Number" name="number" required="">
+                                        <input type="text" class="form-control border-left-0" placeholder="Priority Number" name="priority" required="">
                                     </div>
                                 </div>
                             </div>

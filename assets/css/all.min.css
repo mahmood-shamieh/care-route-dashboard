@@ -15258,7 +15258,8 @@ label.custom-control {
 .navbar-light .navbar-nav-link.show,
 .navbar-light .show > .navbar-nav-link {
   color: #333;
-  background-color: rgba(0, 0, 0, 0.04);
+  /* border: solid 1.6px var(); */
+  background-color: rgba(0, 0, 0, 0.2);
 }
 .navbar-light .navbar-text a {
   color: #2196f3;
@@ -17844,7 +17845,7 @@ input[type="text"].noui-height-helper:not(.noUi-target)[data-fouc] {
   cursor: default;
 }
 .select2-selection--multiple .select2-selection__choice {
-  background-color: #294653;
+  background-color: var(--primary-color);
   color: #fff;
   cursor: default;
   float: left;
@@ -18030,7 +18031,7 @@ input[type="text"].noui-height-helper:not(.noUi-target)[data-fouc] {
 }
 .select2-results__option[aria-selected="true"] {
   color: #fff;
-  background-color: #2196f3;
+  background-color: var(--primary-color);
 }
 .select2-results__options--nested > .select2-results__option {
   padding-left: 2rem;
@@ -34564,5 +34565,7 @@ td{
   text-align: center;
 }
 
-
+th{
+  text-align: center;
+}
 
